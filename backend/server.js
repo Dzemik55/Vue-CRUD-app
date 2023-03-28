@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./models");
 
@@ -12,20 +11,22 @@ let corsOptions = {
 app.use(cors(corsOptions));
 
 
-app.use(bodyParser.json());
+app.use(express.json())
 
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to bezkoder application." });
+    res.json({ message: "Vue CRUD app." });
 });
+
+require("./routes/ram.routes")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 
-db.sequelize.sync({force: true}).then(() => {
-    console.log("Drop and resync db.");
-});
+db.sequelize.sync();
 

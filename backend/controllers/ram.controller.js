@@ -1,21 +1,20 @@
 const db = require("../models");
 const Ram = db.rams;
-const Op = db.Sequelize.Op;
 
 // Create and Save a new RAM
 exports.create = (req, res) => {
-    //Validating a request
+    // Validate request
     if (!req.body.model) {
         res.status(400).send({
-            message: "Can not be empty"
+            message: "Content can not be empty!"
         });
         return;
     }
 
-    //Creating a RAM
+    // Create a RAM
     const ram = {
         brand: req.body.brand,
-        model: req.body.model,
+        model: "req.body.model",
         clock_speed: req.body.clock_speed,
         size: req.body.size,
         CAS_latency: req.body.CAS_latency,
@@ -24,8 +23,7 @@ exports.create = (req, res) => {
         type: req.body.type
     };
 
-    //Save RAM in the database
-
+    // Save RAM in the database
     Ram.create(ram)
         .then(data => {
             res.send(data);
@@ -33,24 +31,23 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Error while creating new RAM"
+                    err.message || "Some error occurred while creating the RAM."
             });
         });
 };
 
 // Retrieve all RAMs from the database.
 exports.findAll = (req, res) => {
-    const brand = req.query.brand;
-    let condition = brand ? { title: { [Op.like]: `%${brand}%` } } : null;
 
-    Ram.findAll({ where: condition })
+
+    Ram.findAll()
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving tutorials."
+                    err.message || "Some error occurred while retrieving RAMs."
             });
         });
 

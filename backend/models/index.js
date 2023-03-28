@@ -20,5 +20,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.rams = require("./ram.model.js")(sequelize, Sequelize);
+db.types = require("./type.model.js")(sequelize, Sequelize);
 
 module.exports = db;
