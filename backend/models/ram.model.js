@@ -21,15 +21,16 @@ module.exports = (sequelize, Sequelize) => {
         },
         price: {
             type: Sequelize.DECIMAL
-        },
-        type: {
-            type: Sequelize.INTEGER,
-            references: {
-                model: 'types',
-                key: 'id'
-            }
-        }
+         }
+        // type: {
+        //     type: Sequelize.INTEGER,
+        //     references: "types",
+        //     referencesKey: "id",
+        //     onDelete: "CASCADE"
+        // }
     });
+
+
 
     return Ram;
 };

@@ -24,7 +24,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="clock_speed">Clock Speed</label>
+        <label for="clock_speed">Clock Speed [Mhz]</label>
         <input
             type="text"
             class="form-control"
@@ -35,7 +35,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="size">Size</label>
+        <label for="size">Size [GB]</label>
         <input
           type="text"
           class="form-control"
@@ -46,7 +46,7 @@
           />
       </div>
       <div class="form-group">
-        <label for="CAS_latency">CAS Latency</label>
+        <label for="CAS_latency">CAS Latency [CL]</label>
         <input
           type="text"
           class="form-control"
@@ -57,40 +57,14 @@
           />
       </div>
     <div class="form-group">
-      <label for="CAS_latency">CAS Latency</label>
-      <input
-          type="text"
-          class="form-control"
-          id="CAS_latency"
-          required
-          v-model="ram.CAS_latency"
-          name="CAS_latency"
-      />
-    </div>
-    <div class="form-group">
       <label for="ECC_status">ECC Status</label>
-      <input
-          type="text"
-          class="form-control"
-          id="ECC_status"
-          required
-          v-model="ram.ECC_status"
-          name="ECC_status"
-      />
+      <select class="form-control" id="type" v-model="ram.ECC_status">
+        <option value="false">false</option>
+        <option value="true">true</option>
+      </select>
     </div>
     <div class="form-group">
-      <label for="ECC_status">ECC Status</label>
-      <input
-          type="text"
-          class="form-control"
-          id="ECC_status"
-          required
-          v-model="ram.ECC_status"
-          name="ECC_status"
-      />
-    </div>
-    <div class="form-group">
-      <label for="price">Price</label>
+      <label for="price">Price [€]</label>
       <input
           type="text"
           class="form-control"
@@ -100,12 +74,24 @@
           name="price"
       />
     </div>
+<!--    <div class="form-group">-->
+<!--      <label for="price">Type</label>-->
+<!--      <input-->
+<!--          type="text"-->
+<!--          class="form-control"-->
+<!--          id="type"-->
+<!--          required-->
+<!--          v-model="ram.type"-->
+<!--          name="type"-->
+<!--      />-->
+<!--    </div>-->
     <div class="form-group">
-      <label for="type">Type</label>
-      <select id="type" name="type">
-        <option value="DDR3">DDR3</option>
-        <option value="DDR4">DDR4</option>
-        <option value="DDR5">DDR5</option>
+      <label for="type_id">Type</label>
+      <select class="form-control" id="type" v-model="ram.type_id">
+        <option value="1">DDR2</option>
+        <option value="2">DDR3</option>
+        <option value="3">DDR4</option>
+        <option value="4">DDR5</option>
       </select>
     </div>
 
@@ -113,19 +99,32 @@
   </div>
   <div v-else>
     <h4>You submitted successfully!</h4>
-    <button class="btn btn-success" @click="newRAM">Add</button>
+    <button class="btn btn-success mr-2" @click="newRAM">Add</button>
+    <router-link
+        to="/"
+        custom
+        v-slot="{ navigate }"
+    >
+      <button class="btn btn-primary"
+              @click="navigate"
+              role="link"
+      >
+        RAM List
+      </button>
+    </router-link>
   </div>
 </div>
 </template>
 
 <script>
-import RAMDataService from "../services/ram.service";
+import RAMDataService from "../services/RAMDataService";
 
 export default {
-  name: "AddRAM",
+  name: "add-ram",
   data() {
     return {
       ram: {
+        id: null,
         brand: "",
         model: "",
         clock_speed: "",
@@ -133,7 +132,7 @@ export default {
         CAS_latency: "",
         ECC_status: "",
         price: "",
-        type: ""
+        type_id: ""
       },
       submitted: false
     };
@@ -148,22 +147,14 @@ export default {
         CAS_latency: this.ram.CAS_latency,
         ECC_status: this.ram.ECC_status,
         price: this.ram.price,
-        type: this.ram.type
+        type_id: this.ram.type_id
       };
 
       RAMDataService.create(data)
         .then(response => {
-          this.ram.brand = response.data.brand;
-          this.ram.model = response.data.model;
-          this.ram.clock_speed = response.data.clock_speed;
-          this.ram.size = response.data.size;
-          this.ram.CAS_latency = response.data.CAS_latency;
-          this.ram.ECC_status = response.data.ECC_status;
-          this.ram.price = response.data.price;
-          this.ram.type = response.data.type;
-
-          this.submitted = true;
+          this.ram.id = response.data.id;
           console.log(response.data);
+          this.submitted = true;
         })
         .catch(e => {
           console.log(e);

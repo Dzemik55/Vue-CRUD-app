@@ -22,4 +22,7 @@ db.sequelize = sequelize;
 db.rams = require("./ram.model.js")(sequelize, Sequelize);
 db.types = require("./type.model.js")(sequelize, Sequelize);
 
+db.types.hasMany(db.rams, {foreignKey: 'type_id'});
+db.rams.belongsTo(db.types, {foreignKey: 'type_id'});
+
 module.exports = db;

@@ -1,5 +1,6 @@
 const db = require("../models");
 const Ram = db.rams;
+const Type = db.types;
 
 // Create and Save a new RAM
 exports.create = (req, res) => {
@@ -14,13 +15,13 @@ exports.create = (req, res) => {
     // Create a RAM
     const ram = {
         brand: req.body.brand,
-        model: "req.body.model",
+        model: req.body.model,
         clock_speed: req.body.clock_speed,
         size: req.body.size,
         CAS_latency: req.body.CAS_latency,
         ECC_status: req.body.ECC_status,
         price: req.body.price,
-        type: req.body.type
+        type_id: req.body.type_id
     };
 
     // Save RAM in the database

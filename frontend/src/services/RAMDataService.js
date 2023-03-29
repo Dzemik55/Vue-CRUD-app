@@ -4,6 +4,7 @@ class RAMDataService {
     getAll(){
         return http.get("/ramList");
     }
+
     get(id){
         return http.get(`/ramList/${id}`);
     }
@@ -18,6 +19,10 @@ class RAMDataService {
 
     delete(id){
         return http.delete(`/ramList/${id}`);
+    }
+
+    findByBrand(brand) {
+        return http.get(`/ramList?brand=${brand}`);
     }
 }
 
