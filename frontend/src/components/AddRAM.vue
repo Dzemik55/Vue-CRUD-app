@@ -11,6 +11,7 @@
         v-model="ram.brand"
         name="brand"
         />
+
     </div>
     <div class="form-group">
       <label for="model">Model</label>
@@ -23,7 +24,7 @@
         name="model"
         />
       </div>
-      <div class="form-group">
+    <div class="form-group">
         <label for="clock_speed">Clock Speed [Mhz]</label>
         <input
             type="text"
@@ -34,7 +35,7 @@
             name="clock_speed"
         />
       </div>
-      <div class="form-group">
+    <div class="form-group">
         <label for="size">Size [GB]</label>
         <input
           type="text"
@@ -44,8 +45,9 @@
           v-model="ram.size"
           name="size"
           />
+
       </div>
-      <div class="form-group">
+    <div class="form-group">
         <label for="CAS_latency">CAS Latency [CL]</label>
         <input
           type="text"
@@ -74,17 +76,6 @@
           name="price"
       />
     </div>
-<!--    <div class="form-group">-->
-<!--      <label for="price">Type</label>-->
-<!--      <input-->
-<!--          type="text"-->
-<!--          class="form-control"-->
-<!--          id="type"-->
-<!--          required-->
-<!--          v-model="ram.type"-->
-<!--          name="type"-->
-<!--      />-->
-<!--    </div>-->
     <div class="form-group">
       <label for="type_id">Type</label>
       <select class="form-control" id="type" v-model="ram.type_id">
@@ -95,21 +86,33 @@
       </select>
     </div>
 
-<button @click="saveRAM" class="btn btn-success">Submit</button>
-  </div>
-  <div v-else>
-    <h4>You submitted successfully!</h4>
-    <button class="btn btn-success mr-2" @click="newRAM">Add</button>
+<button @click="saveRAM" class="badge badge-success mr-2">Submit</button>
     <router-link
         to="/"
         custom
         v-slot="{ navigate }"
     >
-      <button class="btn btn-primary"
+      <button class="badge badge-primary"
               @click="navigate"
               role="link"
       >
-        RAM List
+        Go back to RAM List
+      </button>
+    </router-link>
+  </div>
+  <div v-else>
+    <h4>RAM submitted successfully</h4>
+    <button class="badge badge-success mr-2" @click="newRAM">Add</button>
+    <router-link
+        to="/"
+        custom
+        v-slot="{ navigate }"
+    >
+      <button class="badge badge-primary"
+              @click="navigate"
+              role="link"
+      >
+        Go back to RAM List
       </button>
     </router-link>
   </div>
@@ -139,6 +142,10 @@ export default {
   },
   methods: {
     saveRAM() {
+      if (!this.ram.brand || !this.ram.model || !this.ram.clock_speed || !this.ram.size || !this.ram.CAS_latency || !this.ram.ECC_status || !this.ram.price || !this.ram.type_id) {
+        alert('Please fill all fields.');
+        return;
+      }
       let data = {
         brand: this.ram.brand,
         model: this.ram.model,
@@ -173,5 +180,8 @@ export default {
 .submit-form{
   max-width: 300px;
   margin: auto;
+}
+.has-error span{
+  color: red;
 }
 </style>

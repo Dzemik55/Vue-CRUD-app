@@ -34,9 +34,10 @@
       </div>
       <div class="form-group">
         <label for="ECC_status">ECC Status</label>
-        <input type="text" class="form-control" id="ECC_status"
-               v-model="currentRAM.ECC_status"
-        />
+        <select class="form-control" id="type" v-model="currentRAM.ECC_status">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="price">Price [€]</label>
@@ -58,7 +59,7 @@
     </form>
 
     <button class="badge badge-danger mr-2"
-            @click="deleteRAM"
+            @click="confirmDeleteRAM"
     >
       Delete
     </button>
@@ -78,7 +79,7 @@
           @click="navigate"
           role="link"
       >
-        RAM List
+        Go back to RAM List
       </button>
     </router-link>
 
@@ -104,6 +105,11 @@ export default {
     };
   },
   methods: {
+    confirmDeleteRAM() {
+      if (confirm("Are you sure you want to delete this RAM?")) {
+        this.deleteRAM();
+      }
+    },
     getRAM(id) {
       RAMDataService.get(id)
           .then(response => {

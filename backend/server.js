@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 require("./routes/ram.routes")(app);
 require("./routes/type.route")(app);
 
-const PORT = process.env.PORT || 8080;
+const PORT = 8082;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });

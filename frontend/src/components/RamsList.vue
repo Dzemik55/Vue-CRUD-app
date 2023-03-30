@@ -15,7 +15,7 @@
           :key="index"
           @click="setActiveRAM(ram, index)">
 
-        {{ ram.brand }} <br>{{ ram.model }} <br>
+        <strong>{{ ram.brand }}</strong> <br>{{ ram.model }} <br>
         {{typesMap[ram.type_id]}}
       </li>
     </ul>
@@ -48,7 +48,7 @@
       <label><strong>Type:</strong></label> {{ typesMap[currentRAM.type_id] }}
     </div>
 
-    <h4><router-link :to="'/rams/' + currentRAM.id" class="badge badge-warning">Edit</router-link></h4>
+      <router-link :to="'/rams/' + currentRAM.id"><button class="badge badge-warning">Edit</button></router-link>
   </div>
   <div v-else>
     <br>
